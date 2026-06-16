@@ -3,18 +3,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private float playerSpeed = 5.0f;
-    private float jumpHeight = 1.5f;
-    private float gravityValue = -9.81f;
-
+    [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float gravityValue = -9.81f;
+    [SerializeField] private Transform cameraTransform;
     public CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private InputManager inputManager;
 
     [Header("Input Actions")]
     public InputActionReference moveAction;
     public InputActionReference jumpAction;
 
+    private void Start()
+    {
+        inputManager = InputManager.Instance;
+    }
     private void OnEnable()
     {
         moveAction.action.Enable();
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        transform.rotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer)
