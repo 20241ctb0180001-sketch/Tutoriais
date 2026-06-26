@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 613065638}
   - component: {fileID: 613065637}
   - component: {fileID: 613065640}
+  - component: {fileID: 613065642}
   - component: {fileID: 613065641}
   m_Layer: 0
   m_Name: CinemachineCamera
@@ -588,6 +589,21 @@ MonoBehaviour:
         DecelTime: 0
   PlayerIndex: -1
   AutoEnableInputs: 1
+--- !u!114 &613065642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613065636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5285150cac5e6bf41af29c6cdce5dd41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CinemachinePOVExtension
+  clampAngle: 85
+  horizontalSpeed: 10
+  verticalSpeed: 10
 --- !u!1 &815500692
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,10 +798,6 @@ MonoBehaviour:
   playerSpeed: 5
   jumpHeight: 1.5
   gravityValue: -9.81
-  cameraTransform: {fileID: 330585546}
-  controller: {fileID: 1234523453}
-  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!143 &1234523453
 CharacterController:
   m_ObjectHideFlags: 0

@@ -3,6 +3,52 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
+    private Transform cameraTransform;
+
+    [SerializeField] private float playerSpeed = 2.0f;
+    [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float gravityValue = -9.81f;
+
+    private InputManager inputManager;
+
+    private void Start()
+    {
+        controller = GetComponent<CharacterController>();
+        inputManager = InputManager.Instance;
+        cameraTransform = Camera.main.transform;
+    }
+
+    void Update()
+    {
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
+
+        Vector2 movement = inputManager.GetPlayerMovement();
+        Vector3 move = new Vector3(movement.x, 0, movement.y);
+        
+        // Move o jogador na direção que a câmera está olhando
+        move = cameraTransform.forward * move.z + cameraTransform.right * move.x;
+        move.y = 0f; // Evita que o jogador voe ou afunde ao olhar para cima/baixo
+        
+        controller.Move(move * Time.deltaTime * playerSpeed);
+
+        // Lógica do pulo
+        if (inputManager.PlayerJumped() && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+    }
+}
+/*{
     [SerializeField] private float playerSpeed = 5.0f;
     [SerializeField] private float jumpHeight = 1.5f;
     [SerializeField] private float gravityValue = -9.81f;
@@ -65,4 +111,4 @@ public class PlayerController : MonoBehaviour
         Vector3 finalMove = move * playerSpeed + Vector3.up * playerVelocity.y;
         controller.Move(finalMove * Time.deltaTime);
     }
-}
+}*/
